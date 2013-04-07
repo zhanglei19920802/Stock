@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">股票系统</string>
+
+    <!--引导界面  -->
+    <string name="welcomea_activity_no_network">当前没有网络连接，请设置</string>
+    <string name="welcomea_activity_confirm">设置</string>
+    <string name="welcomea_activity_cancel">取消</string>
+</resources>
