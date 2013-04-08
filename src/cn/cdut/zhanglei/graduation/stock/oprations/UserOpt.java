@@ -1,13 +1,23 @@
 package cn.cdut.zhanglei.graduation.stock.oprations;
 
+import java.util.Vector;
+
+import android.os.Bundle;
+import cn.cdut.zhanglei.graduation.stock.events.EventType;
 import cn.cdut.zhanglei.graduation.stock.events.LoginEvent;
-import cn.cdut.zhanglei.graduation.stock.models.UserModel;
+import cn.cdut.zhanglei.graduation.stock.events.StockEvent;
+import cn.cdut.zhanglei.graduation.stock.models.impl.LoginModel;
+import cn.cdut.zhanglei.graduation.stock.models.impl.UserModel;
+import cn.cdut.zhanglei.graduation.stock.test.TestActivity;
+import cn.cdut.zhanglei.graduation.stock.views.listener.StockEventListener;
 
 /**
+ * 如何接受一个外部事件呢？
+ * 
  * 操作层
  * 
  * 封装该应用程序要做的一切
- * 
+ *       
  * 对应用程序来说，一个常见的操作是用户登陆。
  * 
  * 这实际上是由两个子操作组成：首先从用户那里获得邮件地址和密码，然后从数据库载入“user”模型并检查密码是否匹配。
@@ -24,29 +34,34 @@ import cn.cdut.zhanglei.graduation.stock.models.UserModel;
  * @author zhanglei
  * 
  */
-public class UserOpt implements UserModel {
+public class UserOpt implements StockEventListener {
 	public static final String TAG = "UserOpt";
-
-	private String userName = null;// 用户名
+	private String mUserName = null;// 用户名
 	private String password = null;// 密码
-	
-	private LoginListener mLoginListener = null;
-
-	@Override
-	public boolean isLogin() {
-		return false;
-	}
-
-	@Override
-	public boolean isLock() {
-		return false;
+	private static UserOpt mUserOpt = null;
+	private StockEventListener mMyLoginListener = null;
+	private LoginModel mLoginModel = new LoginModel();
+	private TestActivity ts = null;
+	public static synchronized UserOpt getInstance() {
+		if (mUserOpt == null) {
+			mUserOpt = new UserOpt();
+		}
+		return mUserOpt;
 	}
 
 	/**
 	 * 处理用户登录操作
 	 */
-	public void userLogin() {
-		
+	public void userLogin(Bundle infos) {
+			mUserName = infos.getString("name");
+		System.out.println("UserOpt.userLogin()===="+"用戶登录.username="+infos.getString("name")+"pwd="+infos.getString("pwd"));
+		if(mLoginModel==null){
+			mLoginModel = new LoginModel();
+		}
+		mLoginModel.setmUsername(mUserName);
+		mLoginModel.setCode(1);
+		mLoginModel.setTs(ts);
+		mLoginModel.notifyView();
 	}
 
 	/**
@@ -70,7 +85,7 @@ public class UserOpt implements UserModel {
 	 * @return
 	 */
 	public String getUserName() {
-		return userName;
+		return mUserName;
 	}
 
 	/**
@@ -79,7 +94,7 @@ public class UserOpt implements UserModel {
 	 * @param userName
 	 */
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.mUserName = userName;
 	}
 
 	/**
@@ -99,31 +114,30 @@ public class UserOpt implements UserModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	/**
-	 * 
-	 * @param loginListener
-	 */
-	public void setLoginListener(LoginListener loginListener) {
-		this.mLoginListener = loginListener;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
+	
+	
 	public boolean removeLoginListener() {
 		return false;
 	}
+	
+	public void setLoginListener(StockEventListener l,TestActivity ts){
+		if( l != null){
+				this.mMyLoginListener = l;
+		}
+		this.ts = ts;
+	}
+	
+	public void notifyLoginAttempt(Bundle datas){
+		if(mMyLoginListener!=null){
+			mMyLoginListener.handleEvent(new LoginEvent(this, EventType.LOGIN_EVENT, datas));
+		}
+	}
 
-	/**
-	 *  监听器接口
-	 * @author zhanglei
-	 *
-	 */
-	public interface LoginListener {
-		public void doLogin(LoginEvent event);
-
-		public void doLogout(LoginEvent event);
-	};
+	@Override
+	public void handleEvent(StockEvent event) {
+			System.out.println("UserOpt.handleEvent()====="+event.getCurDateFormat2String());
+			userLogin(((LoginEvent)event).getDatas());
+	}
+	
+	
 }

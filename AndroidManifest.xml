@@ -7,6 +7,8 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="cn.cdut.zhanglei.graduation.stock.StockApplication"
         android:allowBackup="true"
@@ -16,6 +18,17 @@
         <uses-library android:name="android.test.runner" />
 
         <activity android:name="cn.cdut.zhanglei.graduation.stock.views.StartActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="cn.cdut.zhanglei.graduation.stock.test.TestActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name="cn.cdut.zhanglei.graduation.stock.views.MainAcitvity" >
         </activity>
     </application>
 

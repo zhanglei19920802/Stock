@@ -3,24 +3,25 @@ package cn.cdut.zhanglei.graduation.stock;
 import android.app.Application;
 
 /**
- *   Application 全局数据对象存储
+ * Application 全局数据对象存储
+ * 
  * @author zhanglei
- *
+ * 
  */
 
 public class StockApplication extends Application {
 	public static final String TAG = "StockApplication";
-	private  static StockApplication application = null;
-		//global vars
-		private String userName = null;
-		private String password = null;
-		private int Port = 0;
-		private String IP = null;
-	
-	
+	private static StockApplication application = null;
+	// global vars
+	private String userName = null;
+	private String password = null;
+	private int Port = 0;
+	private String IP = null;
 
-	public synchronized static StockApplication getInstance(){
-		if(application ==null){
+
+
+	public synchronized static StockApplication getInstance() {
+		if (application == null) {
 			application = new StockApplication();
 		}
 		return application;
@@ -28,13 +29,12 @@ public class StockApplication extends Application {
 
 	@Override
 	public void onCreate() {
-		System.out.println("StockApplication.onCreate():::"+TAG);
+		System.out.println("StockApplication.onCreate():::" + TAG);
 		super.onCreate();
 	}
-	
-	
-	public synchronized static void setApplication(StockApplication application){
-			StockApplication.application = application;
+
+	public synchronized static void setApplication(StockApplication application) {
+		StockApplication.application = application;
 	}
 
 	public String getUserName() {
@@ -68,7 +68,5 @@ public class StockApplication extends Application {
 	public void setIP(String iP) {
 		IP = iP;
 	}
-	
-	
-	
+
 }

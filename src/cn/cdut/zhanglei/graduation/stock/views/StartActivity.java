@@ -2,6 +2,7 @@ package cn.cdut.zhanglei.graduation.stock.views;
 
 
 import cn.cdut.zhanglei.graduation.stock.config.AppConfig;
+import cn.cdut.zhanglei.graduation.stock.test.TestActivity;
 import cn.cdut.zhanglei.graduation.stock.utils.NetUtil;
 import cn.cdut.zhangleigraduation.stock.R;
 import android.app.Activity;
@@ -60,7 +61,7 @@ public class StartActivity extends Activity {
 		setContentView(R.layout.layout_views_startactivity);
 
 		mConnManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
+		this.startActivity(new Intent(this,TestActivity.class));
 	}
 
 	@Override

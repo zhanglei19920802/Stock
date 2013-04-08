@@ -1,5 +1,7 @@
 package cn.cdut.zhanglei.graduation.stock.events;
 
+import android.os.Bundle;
+
 /**
  * 登录事件
  * 
@@ -13,13 +15,17 @@ package cn.cdut.zhanglei.graduation.stock.events;
  * 
  */
 
-public class LoginEvent extends Event {
+public class LoginEvent extends StockEvent {
 
-	private static final long serialVersionUID = -1017166192708651040L;
+	private Bundle datas = null;
 
-	public LoginEvent(Object source, int EventType) {
+	public LoginEvent(Object source, int EventType, Bundle datas) {
 		super(source, EventType);
+		this.datas = datas;
 
 	}
 
+	public Bundle getDatas(){
+		return datas;
+	}
 }

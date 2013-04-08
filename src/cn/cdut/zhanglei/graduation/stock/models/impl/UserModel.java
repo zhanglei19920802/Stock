@@ -1,4 +1,4 @@
-package cn.cdut.zhanglei.graduation.stock.models;
+package cn.cdut.zhanglei.graduation.stock.models.impl;
 
 /**
  * 模型层
@@ -10,11 +10,10 @@ package cn.cdut.zhanglei.graduation.stock.models;
  * @author zhanglei
  *
  */
-public interface UserModel {
-
-
-	public boolean isLogin();
-	public boolean isLock();
+public class  UserModel {
+	private String mUsername = null;
+//	private String 
+	
 	
 }
 
